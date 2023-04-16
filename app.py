@@ -6,13 +6,16 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return "Hello, world!"
+    return render_template("search.html")
 
-@app.route("/weather")
+@app.route("/weather", methods =["POST"])
 def weather():
+    print("*******",request.form)
     url = 'http://api.weatherapi.com/v1/current.json'
     key = '4d97521ec9d3488d90281006231504'
-    q = request.args.get('city', 'vadodara')
+    # q = request.args.get('city', 'vadodara')
+    q = request.form.get('city', 'vadodara')
+
     response = requests.get("%s?key=%s&q=%s"%(url, key, q))
     response = response.json()
 
